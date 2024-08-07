@@ -6,11 +6,11 @@ public class NumberMastermind {
     private static Random random = new Random();
 
     public static void main(String[] args) {
-    	System.out.println("Welcome to Mastermind!");
+        System.out.println("Welcome to Mastermind!");
         System.out.println("In this game, your goal is to guess a passcode.");
         System.out.println("An X represents a correct digit in the correct position");
-        System.out.println("An O represesnts a correct digit in an incorrect position\n");
-    	boolean playAgain;
+        System.out.println("An O represents a correct digit in an incorrect position\n");
+        boolean playAgain;
         do {
             // Get user inputs
             int attempts = getIntInput("Enter the number of attempts: ");
@@ -130,12 +130,31 @@ public class NumberMastermind {
             }
         }
 
-        // Print feedback in order: X, O, -
-        StringBuilder feedbackOutput = new StringBuilder();
+        // Count occurrences of 'X' and 'O'
+        int xCount = 0, oCount = 0;
         for (char f : feedback) {
-            feedbackOutput.append(f).append(" ");
+            if (f == 'X') xCount++;
+            else if (f == 'O') oCount++;
         }
-        System.out.println("Feedback: " + feedbackOutput.toString().trim());
+
+        // Create sorted feedback array
+        char[] sortedFeedback = new char[length];
+        int index = 0;
+        for (int i = 0; i < xCount; i++) {
+            sortedFeedback[index++] = 'X';
+        }
+        for (int i = 0; i < oCount; i++) {
+            sortedFeedback[index++] = 'O';
+        }
+        while (index < length) {
+            sortedFeedback[index++] = '-';
+        }
+
+        // Print sorted feedback
+        for (char f : sortedFeedback) {
+            System.out.print(f + " ");
+        }
+        System.out.println();
     }
 
     private static String arrayToString(int[] array) {
